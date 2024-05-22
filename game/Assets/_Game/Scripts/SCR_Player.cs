@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,24 +9,44 @@ public class SCR_Player : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float speed = 5;
+
     [SerializeField] private float jumpForce = 350;
 
     private bool isGrounded = true;
     private bool isJumping = false;
     private bool isAttack = false;
+    private bool isDeath = false;
 
     private float horizontal;
 
     private string currentAnimName;
 
+    private int numberCoin = 0;
+
+    private Vector3 savePoint; //origin pos of player 
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        SavePoint();
+        OnInit();
     }
 
+    public void OnInit()
+    {
+        isDeath = false;
+        isAttack = false;
+
+        transform.position = savePoint;
+        ChangeAnim("idle");
+    }    
     void FixedUpdate()
     {
+        if(isDeath)
+        {
+            return;
+        }    
+
         isGrounded = CheckGrounded();
 
         //-1: left; 1: right; 0: nothing... (keyboard) 
@@ -88,35 +109,6 @@ public class SCR_Player : MonoBehaviour
             ChangeAnim("idle");
             rb.velocity = Vector2.zero;
         }
-
-        ////jump
-        //if (isGrounded && rb.velocity.y < 0)
-        //{
-        //    ChangeAnim("fall");
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        //{
-        //    //isJumping = true;
-        //    ChangeAnim("jump");
-        //    rb.AddForce(jumpForce * Vector2.up);
-        //}
-
-        ////moving
-        //if (Mathf.Abs(horizontal) > 0.1f)
-        //{
-        //    ChangeAnim("run");
-        //    rb.velocity = new Vector2(horizontal * Time.fixedDeltaTime * speed, rb.velocity.y); //using velocity.y because player still falling when moving in air (not ground)
-
-        //    //not optimize
-        //    //transform.localPosition = new Vector3(horizontal, 1, 1);
-        //    transform.rotation = Quaternion.Euler(new Vector3(0, horizontal > 0 ? 0 : 180, 0));
-        //}
-        //else if (isGrounded)
-        //{
-        //    ChangeAnim("idle");
-        //    rb.velocity = Vector2.zero;
-        //}
     }
 
     private bool CheckGrounded()
@@ -163,5 +155,26 @@ public class SCR_Player : MonoBehaviour
     {
         isAttack = false;
         ChangeAnim("ilde");
-    }    
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Coin")
+        {
+            numberCoin++;
+            Destroy(collision.gameObject);
+        }
+        if(collision.tag == "Deathzone")
+        {
+            isDeath = true;
+            ChangeAnim("die");
+
+            Invoke(nameof(OnInit), 1f);
+        }    
+    }
+    internal void SavePoint()
+    {
+        savePoint = transform.position;
+    }
 }
+
