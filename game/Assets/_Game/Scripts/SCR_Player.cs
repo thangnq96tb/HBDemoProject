@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SCR_Player : MonoBehaviour
+public class SCR_Player : Character
 {
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Animator anim;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float speed = 5;
 
@@ -19,7 +18,6 @@ public class SCR_Player : MonoBehaviour
 
     private float horizontal;
 
-    private string currentAnimName;
 
     private int numberCoin = 0;
 
@@ -32,14 +30,27 @@ public class SCR_Player : MonoBehaviour
         OnInit();
     }
 
-    public void OnInit()
+    public override void OnInit()
     {
+        base.OnInit();
+
         isDeath = false;
         isAttack = false;
 
         transform.position = savePoint;
         ChangeAnim("idle");
-    }    
+    }
+
+    public override void OnDespawn()
+    {
+        base.OnDespawn();
+    }
+
+    public override void OnDeath()
+    {
+        base.OnDeath();
+    }
+
     void FixedUpdate()
     {
         if(isDeath)
@@ -140,16 +151,6 @@ public class SCR_Player : MonoBehaviour
         ChangeAnim("jump");
         rb.AddForce(jumpForce * Vector2.up);
     }
-
-    private void ChangeAnim(string animName)
-    {
-        if(currentAnimName != animName)
-        {
-            anim.ResetTrigger(animName);
-            currentAnimName = animName;
-            anim.SetTrigger(currentAnimName);
-        }    
-    }    
 
     private void ResetAttack()
     {
