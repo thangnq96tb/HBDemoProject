@@ -9,6 +9,8 @@ public class Enemy : Character
     [SerializeField] private float moveSpeed;
     [SerializeField] private Rigidbody2D rb;
 
+    [SerializeField] private GameObject attackArea;
+
     private IState currentState;
 
     private bool isRight = true;
@@ -29,6 +31,7 @@ public class Enemy : Character
     {
         base.OnInit();
         ChangeState(new IdleState());
+        DeactiveAttack();
     }
 
     public override void OnDespawn()
@@ -60,14 +63,12 @@ public class Enemy : Character
 
     public void Moving()
     {
-        Debug.Log("Enemy moving");
         ChangeAnim("run");
         rb.velocity = transform.right * moveSpeed; 
     }
 
     public void StopMoving()
     {
-        Debug.Log("Enemy stop moving");
         ChangeAnim("idle");
         rb.velocity = Vector2.zero;
     }
@@ -75,6 +76,8 @@ public class Enemy : Character
     public void Attack()
     {
         ChangeAnim("attack");
+        ActiveAttack();
+        Invoke(nameof(DeactiveAttack), 0.5f);
     }
 
     public bool IsTargetInRange()
@@ -119,5 +122,14 @@ public class Enemy : Character
             ChangeState(new IdleState());
         }
 
+    }
+    private void ActiveAttack()
+    {
+        attackArea.SetActive(true);
+    }
+
+    private void DeactiveAttack()
+    {
+        attackArea.SetActive(false);
     }
 }

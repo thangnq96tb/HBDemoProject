@@ -13,6 +13,7 @@ public class SCR_Player : Character
 
     [SerializeField] private Kunai kunaiPrefab;
     [SerializeField] private Transform throwPoint;
+    [SerializeField] private GameObject attackArea;
 
     private bool isGrounded = true;
     private bool isJumping = false;
@@ -26,13 +27,6 @@ public class SCR_Player : Character
 
     private Vector3 savePoint; //origin pos of player 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        SavePoint();
-        OnInit();
-    }
-
     public override void OnInit()
     {
         base.OnInit();
@@ -42,6 +36,8 @@ public class SCR_Player : Character
 
         transform.position = savePoint;
         ChangeAnim("idle");
+        DeactiveAttack();
+        SavePoint();
     }
 
     public override void OnDespawn()
@@ -139,6 +135,9 @@ public class SCR_Player : Character
         rb.velocity = Vector2.zero;
         ChangeAnim("attack");
         Invoke(nameof(ResetAttack), 0.5f);
+
+        ActiveAttack();
+        Invoke(nameof(DeactiveAttack), 0.5f);
     }   
     
     private void Throw()
@@ -182,6 +181,16 @@ public class SCR_Player : Character
     internal void SavePoint()
     {
         savePoint = transform.position;
+    }
+
+    private void ActiveAttack()
+    {
+        attackArea.SetActive(true);
+    }
+
+    private void DeactiveAttack()
+    {
+        attackArea.SetActive(false);
     }
 }
 

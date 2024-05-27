@@ -39,6 +39,7 @@ public class Character : MonoBehaviour
 
     public void OnHit(float damage)
     {
+        Debug.Log("Hit");
         if(!IsDeath)
         {
             hp -= damage;
