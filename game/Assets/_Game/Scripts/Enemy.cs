@@ -34,16 +34,17 @@ public class Enemy : Character
     public override void OnDespawn()
     {
         base.OnDespawn();
+        Destroy(gameObject);
     }
 
     public override void OnDeath()
     {
+        ChangeState(null);
         base.OnDeath();
     }
 
     public void ChangeState(IState newState)
     {
-        Debug.Log("Enemy change state: " + newState.ToString());
         if(currentState != null)
         {
             currentState.OnExit(this);

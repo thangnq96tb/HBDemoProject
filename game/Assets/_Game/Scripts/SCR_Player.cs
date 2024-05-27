@@ -11,6 +11,9 @@ public class SCR_Player : Character
 
     [SerializeField] private float jumpForce = 350;
 
+    [SerializeField] private Kunai kunaiPrefab;
+    [SerializeField] private Transform throwPoint;
+
     private bool isGrounded = true;
     private bool isJumping = false;
     private bool isAttack = false;
@@ -44,6 +47,7 @@ public class SCR_Player : Character
     public override void OnDespawn()
     {
         base.OnDespawn();
+        OnInit();
     }
 
     public override void OnDeath()
@@ -143,6 +147,8 @@ public class SCR_Player : Character
         rb.velocity = Vector2.zero;
         ChangeAnim("throw");
         Invoke(nameof(ResetAttack), 0.5f);
+
+        Instantiate(kunaiPrefab, throwPoint.position, throwPoint.rotation);
     }
 
     private void Jump()

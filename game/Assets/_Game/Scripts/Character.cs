@@ -33,7 +33,8 @@ public class Character : MonoBehaviour
 
     public virtual void OnDeath()
     {
-
+        ChangeAnim("die");
+        Invoke(nameof(OnDespawn), 2f);
     }
 
     public void OnHit(float damage)
