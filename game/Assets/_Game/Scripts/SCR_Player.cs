@@ -31,7 +31,6 @@ public class SCR_Player : Character
     {
         base.OnInit();
 
-        isDeath = false;
         isAttack = false;
 
         transform.position = savePoint;
@@ -53,7 +52,7 @@ public class SCR_Player : Character
 
     void FixedUpdate()
     {
-        if(isDeath)
+        if(IsDeath)
         {
             return;
         }    
@@ -172,7 +171,6 @@ public class SCR_Player : Character
         }
         if(collision.tag == "Deathzone")
         {
-            isDeath = true;
             ChangeAnim("die");
 
             Invoke(nameof(OnInit), 1f);
