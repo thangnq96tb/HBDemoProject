@@ -7,7 +7,7 @@ public class SCR_Player : Character
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float speed = 5;
+    [SerializeField] private float speed = 500;
 
     [SerializeField] private float jumpForce = 350;
 
