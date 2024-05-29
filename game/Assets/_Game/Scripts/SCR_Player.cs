@@ -50,7 +50,7 @@ public class SCR_Player : Character
         base.OnDeath();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if(IsDeath)
         {
@@ -110,7 +110,7 @@ public class SCR_Player : Character
         //moving
         if (Mathf.Abs(horizontal) > 0.1f)
         {
-            rb.velocity = new Vector2(horizontal * Time.fixedDeltaTime * speed, rb.velocity.y); //using velocity.y because player still falling when moving in air (not ground)
+            rb.velocity = new Vector2(horizontal * Time.deltaTime * speed, rb.velocity.y); //using velocity.y because player still falling when moving in air (not ground)
             //transform.localPosition = new Vector3(horizontal, 1, 1); //not option, using rotation to flip
             transform.rotation = Quaternion.Euler(new Vector3(0, horizontal > 0 ? 0 : 180, 0));
         }
