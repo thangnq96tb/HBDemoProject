@@ -1080,6 +1080,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 620867661}
   healthBar: {fileID: 1610667734}
+  combatTextPfb: {fileID: 338019379725036820, guid: db08a48d081bae24cb09566b508b8b73, type: 3}
   attackRange: 2
   moveSpeed: 2.5
   rb: {fileID: 397679575}
@@ -2585,6 +2586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 2077002545}
   healthBar: {fileID: 1969648462}
+  combatTextPfb: {fileID: 338019379725036820, guid: db08a48d081bae24cb09566b508b8b73, type: 3}
   rb: {fileID: 681779060}
   groundLayer:
     serializedVersion: 2
