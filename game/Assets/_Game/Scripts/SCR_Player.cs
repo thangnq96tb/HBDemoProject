@@ -27,6 +27,10 @@ public class SCR_Player : Character
 
     private Vector3 savePoint; //origin pos of player 
 
+    private void Awake()
+    {
+        numberCoin = PlayerPrefs.GetInt("numberCoin", 0);
+    }
     public override void OnInit()
     {
         base.OnInit();
@@ -169,6 +173,7 @@ public class SCR_Player : Character
         if(collision.tag == "Coin")
         {
             numberCoin++;
+            PlayerPrefs.SetInt("numberCoin", numberCoin);
             UIManager.instance.SetCoin(numberCoin);
             Destroy(collision.gameObject);
         }
