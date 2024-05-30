@@ -37,6 +37,8 @@ public class SCR_Player : Character
         ChangeAnim("idle");
         DeactiveAttack();
         SavePoint();
+
+        UIManager.instance.SetCoin(numberCoin);
     }
 
     public override void OnDespawn()
@@ -60,7 +62,7 @@ public class SCR_Player : Character
         isGrounded = CheckGrounded();
 
         //-1: left; 1: right; 0: nothing... (keyboard) 
-        horizontal = Input.GetAxisRaw("Horizontal");
+        //horizontal = Input.GetAxisRaw("Horizontal");
 
         if(isAttack)
         {
@@ -128,7 +130,7 @@ public class SCR_Player : Character
         return hit.collider != null;
     }
 
-    private void Attack()
+    public void Attack()
     {
         isAttack = true;
         rb.velocity = Vector2.zero;
@@ -137,9 +139,9 @@ public class SCR_Player : Character
 
         ActiveAttack();
         Invoke(nameof(DeactiveAttack), 0.5f);
-    }   
-    
-    private void Throw()
+    }
+
+    public void Throw()
     {
         isAttack = true;
         rb.velocity = Vector2.zero;
@@ -149,7 +151,7 @@ public class SCR_Player : Character
         Instantiate(kunaiPrefab, throwPoint.position, throwPoint.rotation);
     }
 
-    private void Jump()
+    public void Jump()
     {
         isJumping = true;
         ChangeAnim("jump");
@@ -167,6 +169,7 @@ public class SCR_Player : Character
         if(collision.tag == "Coin")
         {
             numberCoin++;
+            UIManager.instance.SetCoin(numberCoin);
             Destroy(collision.gameObject);
         }
         if(collision.tag == "Deathzone")
@@ -189,6 +192,11 @@ public class SCR_Player : Character
     private void DeactiveAttack()
     {
         attackArea.SetActive(false);
+    }
+
+    public void SetMove(float horizontal)
+    {
+        this.horizontal = horizontal;
     }
 }
 
