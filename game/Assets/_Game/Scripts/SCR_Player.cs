@@ -18,13 +18,7 @@ public class SCR_Player : MonoBehaviour
 
     private string currentAnimName;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    void FixedUpdate()
+    void Update()
     {
         isGrounded = CheckGrounded();
 
@@ -45,7 +39,7 @@ public class SCR_Player : MonoBehaviour
             }
 
             //jump
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
             {
                 Jump();
             }
@@ -88,35 +82,6 @@ public class SCR_Player : MonoBehaviour
             ChangeAnim("idle");
             rb.velocity = Vector2.zero;
         }
-
-        ////jump
-        //if (isGrounded && rb.velocity.y < 0)
-        //{
-        //    ChangeAnim("fall");
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        //{
-        //    //isJumping = true;
-        //    ChangeAnim("jump");
-        //    rb.AddForce(jumpForce * Vector2.up);
-        //}
-
-        ////moving
-        //if (Mathf.Abs(horizontal) > 0.1f)
-        //{
-        //    ChangeAnim("run");
-        //    rb.velocity = new Vector2(horizontal * Time.fixedDeltaTime * speed, rb.velocity.y); //using velocity.y because player still falling when moving in air (not ground)
-
-        //    //not optimize
-        //    //transform.localPosition = new Vector3(horizontal, 1, 1);
-        //    transform.rotation = Quaternion.Euler(new Vector3(0, horizontal > 0 ? 0 : 180, 0));
-        //}
-        //else if (isGrounded)
-        //{
-        //    ChangeAnim("idle");
-        //    rb.velocity = Vector2.zero;
-        //}
     }
 
     private bool CheckGrounded()
@@ -131,7 +96,7 @@ public class SCR_Player : MonoBehaviour
         isAttack = true;
         rb.velocity = Vector2.zero;
         ChangeAnim("attack");
-        Invoke(nameof(ResetAttack), 0.5f);
+        StartCoroutine(ResetAttack());
     }   
     
     private void Throw()
@@ -139,7 +104,7 @@ public class SCR_Player : MonoBehaviour
         isAttack = true;
         rb.velocity = Vector2.zero;
         ChangeAnim("throw");
-        Invoke(nameof(ResetAttack), 0.5f);
+        StartCoroutine(ResetAttack());
     }
 
     private void Jump()
@@ -159,8 +124,9 @@ public class SCR_Player : MonoBehaviour
         }    
     }    
 
-    private void ResetAttack()
+    IEnumerator ResetAttack()
     {
+        yield return new WaitForSeconds(0.5f);
         isAttack = false;
         ChangeAnim("ilde");
     }    
