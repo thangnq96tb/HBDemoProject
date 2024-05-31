@@ -39,7 +39,7 @@ public class SCR_Player : MonoBehaviour
             }
 
             //jump
-            if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
             {
                 Jump();
             }
@@ -128,6 +128,6 @@ public class SCR_Player : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         isAttack = false;
-        ChangeAnim("ilde");
+        ChangeAnim("idle");
     }    
 }
