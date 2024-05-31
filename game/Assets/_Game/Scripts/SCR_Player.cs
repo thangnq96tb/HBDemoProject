@@ -77,7 +77,7 @@ public class SCR_Player : MonoBehaviour
             //transform.localPosition = new Vector3(horizontal, 1, 1); //not option, using rotation to flip
             transform.rotation = Quaternion.Euler(new Vector3(0, horizontal > 0 ? 0 : 180, 0));
         }
-        else if (isGrounded)
+        else if (isGrounded && !isAttack)
         {
             ChangeAnim("idle");
             rb.velocity = Vector2.zero;
