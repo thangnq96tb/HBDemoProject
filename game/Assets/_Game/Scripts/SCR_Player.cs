@@ -39,7 +39,7 @@ public class SCR_Player : MonoBehaviour
             }
 
             //jump
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 Jump();
             }
@@ -51,13 +51,13 @@ public class SCR_Player : MonoBehaviour
             }
 
             //attack
-            if (Input.GetKeyDown(KeyCode.C) && isGrounded)
+            if (Input.GetKeyDown(KeyCode.C))
             {
                 Attack();
             }
 
             //throw
-            if (Input.GetKeyDown(KeyCode.V) && isGrounded)
+            if (Input.GetKeyDown(KeyCode.V))
             {
                 Throw();
             }
