@@ -352,6 +352,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   speed: 250
+  jumpForce: 350
+  isGrounded: 1
+  isJumping: 0
+  isAttack: 0
 --- !u!1 &838313115
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +398,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 838313115}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 73fffbff1104543479b30f03b72af085, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
