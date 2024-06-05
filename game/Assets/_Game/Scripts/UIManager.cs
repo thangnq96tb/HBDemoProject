@@ -25,10 +25,21 @@ public class UIManager : MonoBehaviour
         instance = this;
     }
 
-    [SerializeField] Text coinText; 
+    [SerializeField] Text coinText;
+    [SerializeField] Button m_ThrowBtn;
 
     public void SetCoin(int coin)
     {
         coinText.text = coin.ToString();
+    }
+
+    public void DisableThrowBtn()
+    {
+        m_ThrowBtn.interactable = false;
+    }
+
+    public void EnableThowBtn()
+    {
+        m_ThrowBtn.interactable = true;
     }
 }

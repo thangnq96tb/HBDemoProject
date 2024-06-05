@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SCR_Player : Character
 {
@@ -14,6 +15,8 @@ public class SCR_Player : Character
     [SerializeField] private Kunai kunaiPrefab;
     [SerializeField] private Transform throwPoint;
     [SerializeField] private GameObject attackArea;
+    [SerializeField] private int m_NumberKunai = 3;
+    [SerializeField] Text m_NumberKunaiTxt; 
 
     private bool isGrounded = true;
     private bool isJumping = false;
@@ -148,12 +151,36 @@ public class SCR_Player : Character
 
     public void Throw()
     {
-        isAttack = true;
-        rb.velocity = Vector2.zero;
-        ChangeAnim("throw");
-        Invoke(nameof(ResetAttack), 0.5f);
+        if(m_NumberKunai > 0)
+        {
+            m_NumberKunai--;
+            UpdateKunaiInfo();
+            isAttack = true;
+            rb.velocity = Vector2.zero;
+            ChangeAnim("throw");
+            Invoke(nameof(ResetAttack), 0.5f);
 
-        Instantiate(kunaiPrefab, throwPoint.position, throwPoint.rotation);
+            Instantiate(kunaiPrefab, throwPoint.position, throwPoint.rotation);
+
+            if(m_NumberKunai == 0)
+            {
+                StartCoroutine(RechargeKunai());
+            }
+        }
+    }
+
+    IEnumerator RechargeKunai()
+    {
+        UIManager.instance.DisableThrowBtn();
+        yield return new WaitForSeconds(10f);
+        m_NumberKunai = 3;
+        UIManager.instance.EnableThowBtn();
+        UpdateKunaiInfo();
+    }
+
+    public void UpdateKunaiInfo()
+    {
+        m_NumberKunaiTxt.text = "x" + m_NumberKunai.ToString();
     }
 
     public void Jump()
