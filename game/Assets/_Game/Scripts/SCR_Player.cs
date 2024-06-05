@@ -82,7 +82,7 @@ public class SCR_Player : Character
             }
 
             //jump
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 Jump();
             }
@@ -94,13 +94,13 @@ public class SCR_Player : Character
             }
 
             //attack
-            if (Input.GetKeyDown(KeyCode.C) && isGrounded)
+            if (Input.GetKeyDown(KeyCode.C))
             {
                 Attack();
             }
 
             //throw
-            if (Input.GetKeyDown(KeyCode.V) && isGrounded)
+            if (Input.GetKeyDown(KeyCode.V))
             {
                 Throw();
             }
@@ -120,8 +120,9 @@ public class SCR_Player : Character
             //transform.localPosition = new Vector3(horizontal, 1, 1); //not option, using rotation to flip
             transform.rotation = Quaternion.Euler(new Vector3(0, horizontal > 0 ? 0 : 180, 0));
         }
-        else if (isGrounded)
+        else if (isGrounded && !isAttack)
         {
+            Debug.Log("Change to IDLE");
             ChangeAnim("idle");
             rb.velocity = Vector2.zero;
         }
@@ -165,7 +166,7 @@ public class SCR_Player : Character
     private void ResetAttack()
     {
         isAttack = false;
-        ChangeAnim("ilde");
+        ChangeAnim("idle");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
