@@ -69,7 +69,7 @@ public class SCR_Player : Character
         isGrounded = CheckGrounded();
 
         //-1: left; 1: right; 0: nothing... (keyboard) 
-        //horizontal = Input.GetAxisRaw("Horizontal");
+        horizontal = Input.GetAxisRaw("Horizontal");
 
         if(isAttack)
         {
@@ -125,7 +125,6 @@ public class SCR_Player : Character
         }
         else if (isGrounded && !isAttack)
         {
-            Debug.Log("Change to IDLE");
             ChangeAnim("idle");
             rb.velocity = Vector2.zero;
         }
