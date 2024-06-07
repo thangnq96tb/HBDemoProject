@@ -26,12 +26,23 @@ public class UIManager : MonoBehaviour
     }
 
     [SerializeField] Text coinText;
+    [SerializeField] Text kunaiText;
     [SerializeField] Button m_ThrowBtn;
+    [SerializeField] Animator m_ReloadAnim;
 
     public void SetCoin(int coin)
     {
         coinText.text = coin.ToString();
     }
+
+    public void SetKunai(int numberKunai)
+    {
+        kunaiText.text = "x" + numberKunai;
+        if(numberKunai == 0)
+        {
+            m_ReloadAnim.SetTrigger("reload");
+        }    
+    }    
 
     public void DisableThrowBtn()
     {

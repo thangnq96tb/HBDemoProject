@@ -9,14 +9,13 @@ public class SCR_Player : Character
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float speed = 100;
-
     [SerializeField] private float jumpForce = 350;
+    [SerializeField] private float cooldown = 2;
 
     [SerializeField] private Kunai kunaiPrefab;
     [SerializeField] private Transform throwPoint;
     [SerializeField] private GameObject attackArea;
     [SerializeField] private int m_NumberKunai = 3;
-    [SerializeField] Text m_NumberKunaiTxt; 
 
     private bool isGrounded = true;
     private bool isJumping = false;
@@ -153,7 +152,7 @@ public class SCR_Player : Character
         if(m_NumberKunai > 0)
         {
             m_NumberKunai--;
-            UpdateKunaiInfo();
+            UIManager.instance.SetKunai(m_NumberKunai);
             isAttack = true;
             rb.velocity = Vector2.zero;
             ChangeAnim("throw");
@@ -163,23 +162,18 @@ public class SCR_Player : Character
 
             if(m_NumberKunai == 0)
             {
-                StartCoroutine(RechargeKunai());
+                StartCoroutine(RechargeKunai(cooldown));
             }
         }
     }
 
-    IEnumerator RechargeKunai()
+    IEnumerator RechargeKunai(float time)
     {
         UIManager.instance.DisableThrowBtn();
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(time);
         m_NumberKunai = 3;
         UIManager.instance.EnableThowBtn();
-        UpdateKunaiInfo();
-    }
-
-    public void UpdateKunaiInfo()
-    {
-        m_NumberKunaiTxt.text = "x" + m_NumberKunai.ToString();
+        UIManager.instance.SetKunai(m_NumberKunai);
     }
 
     public void Jump()
