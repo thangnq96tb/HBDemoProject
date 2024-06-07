@@ -198,12 +198,25 @@ public class SCR_Player : Character
             UIManager.instance.SetCoin(numberCoin);
             Destroy(collision.gameObject);
         }
+
         if(collision.tag == "Deathzone")
         {
             ChangeAnim("die");
 
             Invoke(nameof(OnInit), 1f);
-        }    
+        }
+
+        if (collision.tag == "PotionHealth")
+        {
+            this.HealingHP(collision.GetComponent<SCR_Potion_Health>().percent);
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.tag == "PotionWater")
+        {
+            UIManager.instance.ActiveWaterCollider(collision.GetComponent<SCR_Potion_Water>().duration);
+            Destroy(collision.gameObject);
+        }
     }
     internal void SavePoint()
     {
@@ -224,5 +237,16 @@ public class SCR_Player : Character
     {
         this.horizontal = horizontal;
     }
+
+    private void HealingHP(float percent)
+    {
+        hp += percent / 100 * m_MaxHP;
+
+        if(hp > m_MaxHP)
+        {
+            hp = m_MaxHP;
+        }
+        healthBar.SetNewHp(hp);
+    }    
 }
 

@@ -29,6 +29,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text kunaiText;
     [SerializeField] Button m_ThrowBtn;
     [SerializeField] Animator m_ReloadAnim;
+    [SerializeField] GameObject m_WaterCollider;
 
     public void SetCoin(int coin)
     {
@@ -53,4 +54,16 @@ public class UIManager : MonoBehaviour
     {
         m_ThrowBtn.interactable = true;
     }
+
+    public void ActiveWaterCollider(float time)
+    {
+        StartCoroutine(TriggerWaterPotion(time));
+    }    
+
+    IEnumerator TriggerWaterPotion(float time)
+    {
+        m_WaterCollider.SetActive(true);
+        yield return new WaitForSeconds(time);
+        m_WaterCollider.SetActive(false);
+    }    
 }

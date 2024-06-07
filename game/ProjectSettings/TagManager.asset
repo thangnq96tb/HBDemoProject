@@ -8,6 +8,8 @@ TagManager:
   - Deathzone
   - EnemyWall
   - Enemy
+  - PotionHealth
+  - PotionWater
   layers:
   - Default
   - TransparentFX

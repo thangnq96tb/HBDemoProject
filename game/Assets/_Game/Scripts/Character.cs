@@ -7,8 +7,9 @@ public class Character : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] protected HealthBar healthBar;
     [SerializeField] protected CombatText combatTextPfb;
-    [SerializeField] protected float hp;
+    [SerializeField] protected float m_MaxHP;
 
+    protected float hp;
     private string currentAnimName;
 
     public bool IsDeath => hp <= 0;
@@ -25,7 +26,8 @@ public class Character : MonoBehaviour
 
     public virtual void OnInit()
     {
-        healthBar.OnInit(100, transform);
+        hp = m_MaxHP;
+        healthBar.OnInit(m_MaxHP, transform);
     }
 
     public virtual void OnDespawn()
