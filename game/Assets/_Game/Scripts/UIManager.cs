@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] int m_DropHealthPotionRate = 30;
     [SerializeField] int m_DropWaterPotionRate = 80;
 
+    [SerializeField] public Text m_DamagePerKunaiTxt;
+    [SerializeField] public Text m_DamagePerSwordTxt;
 
     public void SetCoin(int coin)
     {
@@ -85,5 +87,11 @@ public class UIManager : MonoBehaviour
         {
             Instantiate(m_PotionWaterPfb, enemy.position, Quaternion.identity);
         }
-    }    
+    }
+
+    public void UpdatePlayerStatDisplay(float dmgKunai, float dmgSword)
+    {
+        m_DamagePerKunaiTxt.text = "Kunai: " + dmgKunai;
+        m_DamagePerSwordTxt.text = "Sword: " + dmgSword;
+    }
 }

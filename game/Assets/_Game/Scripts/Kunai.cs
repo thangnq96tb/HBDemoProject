@@ -7,13 +7,16 @@ public class Kunai : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private GameObject hitVFX;
 
+    private float damage; 
+
     void Start()
     {
-        OnInit();
+        OnInit(damage);
     }
 
-    public void OnInit()
+    public void OnInit(float damage)
     {
+        this.damage = damage;
         rb.velocity = transform.right * 5f;
         Invoke(nameof(OnDespawn), 4f);
     }
@@ -27,7 +30,7 @@ public class Kunai : MonoBehaviour
     {
         if(collision.tag == "Enemy")
         {
-            collision.GetComponent<Character>().OnHit(30f);
+            collision.GetComponent<Character>().OnHit(damage);
             Instantiate(hitVFX, transform.position, transform.rotation);
             OnDespawn();
         }

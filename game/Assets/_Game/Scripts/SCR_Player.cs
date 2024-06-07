@@ -17,13 +17,16 @@ public class SCR_Player : Character
     [SerializeField] private GameObject attackArea;
     [SerializeField] private int m_NumberKunai;
 
+    [SerializeField] private float m_dmgPercentIncreasePerCoin;
+    [SerializeField] public float m_DamagePerKunai;
+    [SerializeField] public float m_DamagePerSword;
+
     private bool isGrounded = true;
     private bool isJumping = false;
     private bool isAttack = false;
     private bool isDeath = false;
 
     private float horizontal;
-
 
     private int numberCoin = 0;
 
@@ -46,6 +49,7 @@ public class SCR_Player : Character
 
         UIManager.instance.SetKunai(m_NumberKunai);
         UIManager.instance.SetCoin(numberCoin);
+        UIManager.instance.UpdatePlayerStatDisplay(m_DamagePerKunai, m_DamagePerSword);
     }
 
     public override void OnDespawn()
@@ -159,7 +163,7 @@ public class SCR_Player : Character
             ChangeAnim("throw");
             Invoke(nameof(ResetAttack), 0.5f);
 
-            Instantiate(kunaiPrefab, throwPoint.position, throwPoint.rotation);
+            Instantiate(kunaiPrefab, throwPoint.position, throwPoint.rotation).GetComponent<Kunai>().OnInit(m_DamagePerKunai);
 
             if(m_NumberKunai == 0)
             {
@@ -197,6 +201,8 @@ public class SCR_Player : Character
             numberCoin++;
             PlayerPrefs.SetInt("numberCoin", numberCoin);
             UIManager.instance.SetCoin(numberCoin);
+            BuffDamageKunai(m_dmgPercentIncreasePerCoin);
+            BuffDamageSword(m_dmgPercentIncreasePerCoin);
             Destroy(collision.gameObject);
         }
 
@@ -249,5 +255,19 @@ public class SCR_Player : Character
         }
         healthBar.SetNewHp(hp);
     }    
+
+    private void BuffDamageKunai(float percent)
+    {
+        m_DamagePerKunai += m_DamagePerKunai * percent / 100;
+        UIManager.instance.UpdatePlayerStatDisplay(m_DamagePerKunai, m_DamagePerSword);
+    }
+
+    private void BuffDamageSword(float percent)
+    {
+        m_DamagePerSword += m_DamagePerSword * percent / 100;
+        UIManager.instance.UpdatePlayerStatDisplay(m_DamagePerKunai, m_DamagePerSword);
+    }
+
+
 }
 
