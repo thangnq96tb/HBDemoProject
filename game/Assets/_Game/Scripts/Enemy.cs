@@ -43,6 +43,7 @@ public class Enemy : Character
 
     public override void OnDeath()
     {
+        UIManager.instance.DropItemWhenEnemyDead(transform);
         ChangeState(null);
         base.OnDeath();
     }

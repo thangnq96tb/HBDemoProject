@@ -15,7 +15,7 @@ public class SCR_Player : Character
     [SerializeField] private Kunai kunaiPrefab;
     [SerializeField] private Transform throwPoint;
     [SerializeField] private GameObject attackArea;
-    [SerializeField] private int m_NumberKunai = 3;
+    [SerializeField] private int m_NumberKunai;
 
     private bool isGrounded = true;
     private bool isJumping = false;
@@ -44,6 +44,7 @@ public class SCR_Player : Character
         DeactiveAttack();
         SavePoint();
 
+        UIManager.instance.SetKunai(m_NumberKunai);
         UIManager.instance.SetCoin(numberCoin);
     }
 

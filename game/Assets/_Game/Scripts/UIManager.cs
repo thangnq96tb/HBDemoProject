@@ -30,6 +30,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button m_ThrowBtn;
     [SerializeField] Animator m_ReloadAnim;
     [SerializeField] GameObject m_WaterCollider;
+    [SerializeField] GameObject m_PotionHealthPfb;
+    [SerializeField] GameObject m_PotionWaterPfb;
+
+    [SerializeField] int m_DropHealthPotionRate = 30;
+    [SerializeField] int m_DropWaterPotionRate = 80;
+
 
     public void SetCoin(int coin)
     {
@@ -65,5 +71,19 @@ public class UIManager : MonoBehaviour
         m_WaterCollider.SetActive(true);
         yield return new WaitForSeconds(time);
         m_WaterCollider.SetActive(false);
+    }    
+
+    public void DropItemWhenEnemyDead(Transform enemy)
+    {
+        //30% drop Health potion, else 80% drop Water potion (Health is high piority)
+        int randomChance = Random.Range(0, 100);
+        if(randomChance < m_DropHealthPotionRate)
+        {
+            Instantiate(m_PotionHealthPfb, enemy.position, Quaternion.identity);
+        }    
+        else if(randomChance < m_DropWaterPotionRate)
+        {
+            Instantiate(m_PotionWaterPfb, enemy.position, Quaternion.identity);
+        }
     }    
 }
